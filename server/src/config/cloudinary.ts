@@ -17,7 +17,8 @@ export const isCloudinaryReady = Boolean(
 );
 
 // What  to do when the cloudinary settings are missing
-export const CLOUDINARY_MISSING = "Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY AND CLOUDINARY_API_SECRET to server/.env./"
+export const CLOUDINARY_MISSING =
+  "Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY AND CLOUDINARY_API_SECRET to server/.env./";
 cloudinary.config({
   cloud_name: env.cloudinaryCloudName,
   api_key: env.cloudinaryApiKey,
@@ -92,4 +93,35 @@ export const deleteAllUploadedPhotos = async () => {
   await cloudinary.api
     .delete_resources_by_prefix(`${UPLOAD_FOLDER}/`)
     .catch(() => {});
+};
+
+// list the names (public ids ) of all demo product photos on cloudinary
+// e.g("Quickcart/products/smart-wath")
+
+export const listProductPhotoIds = async (): Promise<string[]> => {
+  if (!isCloudinaryReady) {
+    return [];
+  }
+
+  const ids: string[] = [];
+  let nextCursor: string | undefined = undefined;
+
+  do {
+    const page = await cloudinary.api.resources({
+      type: "upload",
+      prefix: `${PHOTO_FOLDER}/`,
+      max_results: 500,
+      next_cursor: nextCursor,
+    });
+
+    for (const photo of page.resources) {
+      ids.push(photo.public_id);
+    }
+
+    nextCursor = page.next_cursor; // undefined on the last page
+  } while (nextCursor);
+
+  return ids.filter((id) => {
+    return !id.startsWith(`${UPLOAD_FOLDER}`);
+  });
 };
