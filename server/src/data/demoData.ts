@@ -6,7 +6,7 @@ import { PHOTO_FOLDER, photoUrl } from "../config/cloudinary";
 import { categories } from "./categories";
 import { products, SeedProduct } from "./products";
 import { slugify } from "../utils/slugify";
-
+import { users } from "./users";
 // STEP 12: Put the demo data in the database (part 1: shape the records)
 // the data files use slugs and simple names; the database needs real ids, full photo addressses and every field the model expects. these functions do that translation
 
@@ -62,6 +62,10 @@ export const photosFor = (slug: string, photoIds: string[]): string[] => {
 
 export const demoCategories = () => {
   return categories;
+};
+
+export const demoUsers = () => {
+  return users;
 };
 
 // ----- Products -------------------------------------------------------------

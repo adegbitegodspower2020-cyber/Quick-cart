@@ -2,10 +2,11 @@
 // fills the database with the demodata : npm run seed
 // Running it again wipes the demo collections and starts fresh, so its always safe to re-run
 
+import { User } from "../models/User";
 import mongoose, { Types } from "mongoose";
 import { Category } from "../models/Category";
 import { Product } from "../models/Product";
-import { demoCategories, demoProducts } from "./demoData";
+import { demoCategories, demoProducts, demoUsers } from "./demoData";
 import { listProductPhotoIds } from "../config/cloudinary";
 import { products } from "./products";
 import { categories } from "./categories";
@@ -17,7 +18,11 @@ import { connectDB } from "../config/database";
 
 export const seedDatabase = async () => {
   // 1. Empty th collections (both at the same time with Promise.all)
-  await Promise.all([Category.deleteMany({}), Product.deleteMany({})]);
+  await Promise.all([
+    Category.deleteMany({}),
+    Product.deleteMany({}),
+    User.deleteMany({}),
+  ]);
 
   //   2. Save the categories, then remember each ones id by slug: "electronics" -> objectId(''')
 
@@ -76,6 +81,7 @@ export const seedDatabase = async () => {
     }),
   );
 
+  const savedUsers = await User.create(demoUsers());
   //   6. A summary for whoever ran the seed
   return {
     categories: savedCategories.length,
