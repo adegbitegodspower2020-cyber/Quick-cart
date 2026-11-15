@@ -7,6 +7,8 @@ import mongoose, { Types } from "mongoose";
 import { Category } from "../models/Category";
 import { Product } from "../models/Product";
 import { PromoCode } from "../models/PromoCode";
+import { Order } from "../models/Order";
+import { Counter } from "../models/Counter";
 import { demoCategories, demoProducts, demoUsers } from "./demoData";
 import { promoCodes } from "./promoCodes";
 import { listProductPhotoIds } from "../config/cloudinary";
@@ -19,12 +21,14 @@ import { connectDB } from "../config/database";
 // The bottom of the file runs it only when you type npm run seed.
 
 export const seedDatabase = async () => {
-  // 1. Empty th collections (both at the same time with Promise.all)
+  // 1. Empty the collections (both at the same time with Promise.all)
   await Promise.all([
     Category.deleteMany({}),
     Product.deleteMany({}),
     User.deleteMany({}),
     PromoCode.deleteMany({}),
+    Order.deleteMany({}),
+    Counter.deleteMany({}), // so the next order is #QC-1042 again
   ]);
 
   //   2. Save the categories, then remember each ones id by slug: "electronics" -> objectId(''')
