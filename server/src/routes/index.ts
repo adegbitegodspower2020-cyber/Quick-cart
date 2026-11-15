@@ -5,6 +5,7 @@ import { Router } from "express";
 import categoryRoutes from "./categoryRoutes";
 import productRoutes from "./productRoutes";
 import accountRoutes from "./accountRoutes";
+import promoRoutes from "./promoRoutes";
 // Step 5: join the routes and add a health check
 // one router joins all the route files. app.ts mounts it at/api, so a rout like e.g "/products" becomes /api/products
 
@@ -17,6 +18,7 @@ router.get("health", (_req, res) => {
 router.use("/categories", categoryRoutes);
 router.use("/products", productRoutes); // /api/products...
 router.use("/account", accountRoutes);
+router.use("/promo-codes", promoRoutes); // /api/promo-codes...
 
 // Next: Step 6 (start the server) -> server/src/server.ts
 

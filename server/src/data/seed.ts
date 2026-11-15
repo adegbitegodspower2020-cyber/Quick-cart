@@ -6,7 +6,9 @@ import { User } from "../models/User";
 import mongoose, { Types } from "mongoose";
 import { Category } from "../models/Category";
 import { Product } from "../models/Product";
+import { PromoCode } from "../models/PromoCode";
 import { demoCategories, demoProducts, demoUsers } from "./demoData";
+import { promoCodes } from "./promoCodes";
 import { listProductPhotoIds } from "../config/cloudinary";
 import { products } from "./products";
 import { categories } from "./categories";
@@ -22,6 +24,7 @@ export const seedDatabase = async () => {
     Category.deleteMany({}),
     Product.deleteMany({}),
     User.deleteMany({}),
+    PromoCode.deleteMany({}),
   ]);
 
   //   2. Save the categories, then remember each ones id by slug: "electronics" -> objectId(''')
@@ -82,10 +85,16 @@ export const seedDatabase = async () => {
   );
 
   const savedUsers = await User.create(demoUsers());
-  //   6. A summary for whoever ran the seed
+
+  // 7. Save the promo codes (insertMany is fine here: promo codes have no save hooks)
+  const savedPromoCodes = await PromoCode.insertMany(promoCodes);
+
+  // 8. A summary for whoever ran the seed
   return {
     categories: savedCategories.length,
     products: saveProducts.length,
+    users: savedUsers.length,
+    promoCodes: savedPromoCodes.length,
     withoutPhotos: saveProducts
       .filter((product) => {
         return product.images.length === 0;
@@ -105,7 +114,7 @@ const runSeed = async () => {
     const result = await seedDatabase();
 
     console.log(
-      `Seeded ${result.categories} categories and ${result.products} products`,
+      `Seeded ${result.categories} categories, ${result.products} products, ${result.users} users and ${result.promoCodes} promo codes`,
     );
   } catch (error) {
     console.error("Seed failed:", (error as Error).message);
