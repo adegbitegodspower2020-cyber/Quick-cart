@@ -31,6 +31,8 @@ import {
   getAdminOrders,
   updateOrderStatus,
 } from "../controllers/adminOrderController";
+import { getDashboard } from "../controllers/adminDashboardController";
+import { advanceOrders, resetDemo } from "../controllers/demoController";
 
 const router = Router();
 
@@ -62,5 +64,9 @@ router.patch("/orders/:orderNumber/status", updateOrderStatus);
 // Customers (STEP 26)
 router.get("/customers", getCustomers);
 router.get("/customers/:id", getCustomer);
+router.get("/dashboard", getDashboard);
+// Demo panel (STEP 28)
+router.post("/demo/reset", resetDemo);
+router.post("/demo/advance-orders", advanceOrders);
 
 export default router;
