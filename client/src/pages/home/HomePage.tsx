@@ -1,5 +1,5 @@
 import BestSellers from "../../components/home/BestSellers";
-import CategoryGrid from "../../components/home/CategoryGrid";
+import CategoryGrid from "../../components/home/CategoryGrid"
 import FeaturedProducts from "../../components/home/FeaturedProducts";
 import FlashSale from "../../components/home/FlashSale";
 import HeroSection from "../../components/home/HeroSection";
