@@ -10,6 +10,8 @@ import RecommendedForYou from "../../components/home/RecommendedForYou";
 import Testimonials from "../../components/home/Testimonials";
 import TodaysDeal from "../../components/home/TodaysDeal";
 import TrustBar from "../../components/home/TrustBar";
+import RecentlyViewed from "../../components/home/RecentlyViewed";
+
 
 const HomePage = () => {
   return (
@@ -24,6 +26,7 @@ const HomePage = () => {
       <PromoBanner />
       <NewArrivals />
       <RecommendedForYou />
+      <RecentlyViewed />
       <Testimonials />
       <NewsletterBanner />
     </div>
