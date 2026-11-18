@@ -1,7 +1,7 @@
 // routes/index.ts
 // joins all the route files together app.ts puts these under / api
 
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import categoryRoutes from "./categoryRoutes";
 import productRoutes from "./productRoutes";
 import accountRoutes from "./accountRoutes";
@@ -16,9 +16,9 @@ import adminRoutes from "./adminRoutes";
 
 const router = Router();
 
-// GET /api/health: a quick check that the
-router.get("health", (_req, res) => {
-  res.json({ status: "ok", message: "QuickCart API is running" });
+// GET /api/health
+router.get("/health", (_req: Request, res: Response) => {
+  res.status(200).json({ status: "ok", message: "QuickCart API is running" });
 });
 router.use("/categories", categoryRoutes);
 router.use("/products", productRoutes); // /api/products...
