@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useToast } from "../../context/ToastContext";
 import type { AdminProductRow } from "../../types/admin";
 import { api } from "../../utils/api";
+import { announceCountsChanged } from "../../utils/adminEvents";
 import { shortDate } from "../../utils/dates";
 import { naira } from "../../utils/format";
 
@@ -102,6 +103,8 @@ const ProductsTable = ({ products, onDeleted }: ProductsTableProps) => {
       showToast({ type: "success", title: message }); // "'Demo Speaker' has been deleted."
       setConfirmId(null);
       onDeleted();
+
+      announceCountsChanged(); // Updates the Products count in the admin menu
     } catch (err) {
       showToast({
         type: "error",
